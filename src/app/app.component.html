@@ -1,7 +1,5 @@
-
 <ng-sidebar-container>
-
-  <!-- A sidebar -->
+  <!-- The Sidebar -->
   <ng-sidebar #sidebar mode="push" [(opened)]="_opened">
     <div class="text-right">
       <i (click)="sidebar.close()" class="fas fa-times text-light p-3"></i>
@@ -9,10 +7,16 @@
     <app-sidebar-list></app-sidebar-list>
   </ng-sidebar>
 
-  <!-- Page content -->
+  
+
   <div class="p-2" ng-sidebar-content>
-    <button *ngIf="!_opened" class="btn btn-dark" (click)="_toggleSidebar()"><i class="fas fa-stream"></i></button>
-    <router-outlet></router-outlet>
+    <!-- Sidebar Opener -->
+    <button *ngIf="!_opened" class="btn btn-dark zIndex" (click)="_toggleSidebar()"><i class="fas fa-stream"></i></button>
+
+     <!-- PAGE CONTENT -->
+    <div class="mt-5">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 
 </ng-sidebar-container>

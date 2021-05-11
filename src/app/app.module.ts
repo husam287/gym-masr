@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {HttpClientModule} from '@angular/common/http'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,6 +10,7 @@ import { AddNewHeroComponent } from './main-system/add-new-hero/add-new-hero.com
 import { HeroComponent } from './main-system/heros/hero/hero.component';
 import { SidebarModule } from 'ng-sidebar';
 import { SidebarListComponent } from './main-system/sidebar-list/sidebar-list.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { SidebarListComponent } from './main-system/sidebar-list/sidebar-list.co
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    HttpClientModule,
     SidebarModule.forRoot(),
     AppRoutingModule
   ],
