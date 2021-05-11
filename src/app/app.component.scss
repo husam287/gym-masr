@@ -1,0 +1,29 @@
+@import 'variables';
+
+
+ng-sidebar-container{
+    height: 100vh;
+}
+
+::ng-deep .ng-sidebar{
+    background-color: $primary-color;
+    width: 380px;
+    
+    .fa-times{
+        cursor: pointer;
+        &:hover{
+            transform: scale(1.1);
+        }
+    }
+    
+}
+
+::ng-deep .ng-sidebar--opened{
+    box-shadow: 0 0 2.5em rgba(85,85,85,.5);
+}
+
+button{
+    position: fixed;
+    top: .5rem;
+    left: .5rem;
+}

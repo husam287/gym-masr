@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'gym-masr';
+  _opened: boolean = true;
+ 
+  _toggleSidebar() {
+    this._opened = !this._opened;
+  }
 }

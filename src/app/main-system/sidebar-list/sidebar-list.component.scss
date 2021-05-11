@@ -1,0 +1,16 @@
+@import 'variables';
+
+li{
+    background-color: transparent !important;
+    cursor: pointer;
+    border: 0;
+    outline: none;
+    &:hover{
+        transform: scale(1.1);
+    }
+}
+
+.active{
+    background-color:$darker-primary-color !important;
+    transform: scale(1.1);
+}
