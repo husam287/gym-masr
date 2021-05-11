@@ -1,37 +1,38 @@
-<div class="row justify-content-center">
-    <div class="col-12 col-md-6">
-        <div class="card">
-            <div class="card-header text-light bgPrimaryColor">
-                ADD NEW HERO
+<div class="hideOverflow">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6">
+            <div class="card shadow">
+
+                <div class="card-header text-light bgPrimaryColor">
+                    <span class="noselect">ADD NEW HERO</span>
+                </div>
+
+                <div class="card-body">
+                    <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+                        <div class="form-group border" [ngClass]=" (!name.valid&&name.touched)? 'border-danger':'' ">
+                            <input required class="form-control" type="text" ngModel #name="ngModel" name="name" placeholder="Name">
+                        </div>
+    
+                        <div class="form-group border" [ngClass]=" (!program.valid&&program.touched)? 'border-danger':'' ">
+                            <select required  class="form-control" name="program" ngModel #program="ngModel">
+                                <option value="" selected hidden>Select Program</option>
+                                <option value="daily">Daily (1 Day)</option>
+                                <option value="monthly">Monthly (30 Day - 250 LE)</option>
+                                <option value="monthlyPlus">Monthly Plus (30 Day - 300 LE)</option>
+                            </select>
+                        </div>
+    
+                        <div class="row justify-content-end">
+                            <button class="btn btn-success" [disabled]="!form.valid" type="submit">
+                                ADD <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+    
+                    </form>
+                </div>
+    
             </div>
-            <div class="card-body">
-                <form #form="ngForm" (ngSubmit)="onSubmit(form)">
-                    <div class="form-group border" [ngClass]=" (!name.valid&&name.touched)? 'border-danger':'' ">
-                        <input required class="form-control" type="text" ngModel #name="ngModel" name="name" placeholder="Name">
-                    </div>
-
-                    <div class="form-group border" [ngClass]=" (!program.valid&&program.touched)? 'border-danger':'' ">
-                        <select required  class="form-control" name="program" ngModel #program="ngModel">
-                            <option value="" selected hidden>Select Program</option>
-                            <option value="daily">Daily (1 Day)</option>
-                            <option value="monthly">Monthly (30 Day - 250 LE)</option>
-                            <option value="monthlyPlus">Monthly Plus (30 Day - 300 LE)</option>
-
-
-                        </select>
-                    </div>
-
-                    <div class="row justify-content-end">
-                        <button class="btn btn-success" [disabled]="!form.valid" type="submit">
-                            ADD <i class="fas fa-plus"></i>
-                        </button>
-                    </div>
-
-                    <p id="hh"></p>
-                </form>
-            </div>
-
+    
         </div>
-
     </div>
 </div>

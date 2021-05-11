@@ -4,16 +4,19 @@
     <div class="text-right">
       <i (click)="sidebar.close()" class="fas fa-times text-light p-3"></i>
     </div>
-    <app-sidebar-list></app-sidebar-list>
+
+      <app-sidebar-list></app-sidebar-list>
+      
   </ng-sidebar>
 
-  
+
 
   <div class="p-2" ng-sidebar-content>
     <!-- Sidebar Opener -->
-    <button *ngIf="!_opened" class="btn btn-dark zIndex" (click)="_toggleSidebar()"><i class="fas fa-stream"></i></button>
+    <button *ngIf="!_opened" class="btn btn-dark zIndex" (click)="_toggleSidebar()"><i
+        class="fas fa-stream"></i></button>
 
-     <!-- PAGE CONTENT -->
+    <!-- PAGE CONTENT -->
     <div class="mt-5">
       <router-outlet></router-outlet>
     </div>
