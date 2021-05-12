@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-sidebar-list',
@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidebarListComponent implements OnInit {
 
+  @Input('sidebar') sidebar:any;
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  closeSidebar(){
+    this.sidebar.close();
   }
 
 }
