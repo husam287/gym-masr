@@ -1,1 +1,55 @@
-<p>home works!</p>
+<div class="container">
+    <!-- STATISTICS DATA -->
+    <div class="row text-light text-center justify-content-center">
+        <!-- Total Heros -->
+        <div class="col-md-3 col-6 mb-4">
+            <app-card [title]="'Total Heros'" [amount]="354" [iconClasses]="'fas fa-dumbbell fa-2x'"
+                colorClass="bg-primary">
+            </app-card>
+        </div>
+        <!-- New Hero -->
+        <div class="col-md-3 col-6 mb-4">
+            <app-card [title]="'New Heros'" [amount]="38" [iconClasses]="'fas fa-child fa-2x'" colorClass="bg-secondary">
+            </app-card>
+        </div>
+        <!-- Total Money -->
+        <div class="col-md-3 col-6 mb-4">
+            <div class="card">
+                <app-card [title]="'Total Money'" [amount]="30000" [money]="'LE'" [iconClasses]="'fas fa-wallet fa-2x'"
+                    colorClass="bg-dark">
+                </app-card>
+            </div>
+        </div>
+        <!-- This Month Income -->
+        <div class="col-md-3 col-6 mb-4">
+            <app-card [title]="thisMonth +' Income'" [amount]="300" [money]="'LE'"
+                [iconClasses]="'fas fa-money-bill-alt fa-2x'" colorClass="bg-info">
+            </app-card>
+        </div>
+        <!-- Active Hero -->
+        <div class="col-md-3 col-6 mb-4">
+            <app-card [title]="'Active Heros'" [amount]="26"
+                [iconClasses]="'fas fa-smile fa-2x'" colorClass="bg-success">
+            </app-card>
+        </div>
+
+        <div class="col-md-3 col-6 mb-4">
+            <app-card [title]="'Late Payment'" [amount]="7"
+                [iconClasses]="'fas fa-user-times fa-2x'" colorClass="bg-danger">
+            </app-card>
+        </div>
+    </div>
+
+    <!-- GRAPHIS -->
+    <div class="row justify-content-center">
+        <app-line-chart [title]="'Total Heros'" [color]="'#007bff'"></app-line-chart>
+    </div>
+    <div class="row justify-content-center">
+        <app-line-chart [title]="'Month Income'" [color]="'#dc3545'" [data]="[200,300,100,350]"></app-line-chart>
+    </div>
+
+
+
+</div>
+
+

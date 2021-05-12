@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
-  constructor() { }
+  thisMonth:string;
+  constructor() {
+    const date = new Date();
+    const month = date.toLocaleString('default', { month: 'long' });
+    this.thisMonth = month;
+   }
 
   ngOnInit(): void {
   }
 
+  
 }

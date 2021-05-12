@@ -11,6 +11,9 @@ import { HeroComponent } from './main-system/heros/hero/hero.component';
 import { SidebarModule } from 'ng-sidebar';
 import { SidebarListComponent } from './main-system/sidebar-list/sidebar-list.component';
 import { FormsModule } from '@angular/forms';
+import { AnimatedDigitComponent } from './shared/animated-digit/animated-digit.component';
+import { CardComponent } from './main-system/home/card/card.component';
+import { LineChartComponent } from './main-system/home/line-chart/line-chart.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,10 @@ import { FormsModule } from '@angular/forms';
     HerosComponent,
     AddNewHeroComponent,
     HeroComponent,
-    SidebarListComponent
+    SidebarListComponent,
+    AnimatedDigitComponent,
+    CardComponent,
+    LineChartComponent
   ],
   imports: [
     BrowserModule,
