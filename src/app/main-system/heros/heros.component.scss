@@ -1,0 +1,12 @@
+@import 'variables';
+
+thead{
+    background-color: $primary-color;
+}
+
+tr{
+    &:hover{
+        transform: scale(0.98);
+    }
+}
+

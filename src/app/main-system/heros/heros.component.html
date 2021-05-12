@@ -1,1 +1,27 @@
-<p>heros works!</p>
+<table *ngIf="heros.length!==0" class="table">
+    <thead>
+        <tr>
+            <th scope="col" style="color: white">Name</th>
+            <th scope="col" style="color: white">Program</th>
+            <th scope="col" style="color: white">Days Left</th>
+            <th scope="col" style="color: white">Active Days</th>
+            <th scope="col" style="color: white">Over Time</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr [ngClass]="hero.getStatusClass" class="text-dark" style="cursor: pointer;" *ngFor="let hero of heros;">
+            <th scope="row">{{hero.getHeroInfo.name}}</th>
+            <td>{{hero.getHeroInfo.program}}</td>
+            <td>{{hero.getHeroInfo.daysLeft}}</td>
+            <td class="text-success">{{hero.getHeroInfo.activeDaysNumber}}</td>
+            <td [ngClass]="hero.getHeroInfo.overtimeDaysNumber===0? 'text-dark':'text-danger'">{{hero.getHeroInfo.overtimeDaysNumber}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div *ngIf="heros.length===0" class="VHcenter text-danger" >
+    <i class="fas fa-times-circle fa-5x mr-3"></i>
+    <strong class="h2">No Heros At The Moment!</strong>
+    
+</div>

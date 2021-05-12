@@ -3,10 +3,10 @@ export interface HeroInfo {
     program: string,
     startingDate: Date,
     endingDate: Date,
-    activeDaysNumber?:number,
-    overtimeDaysNumber?:number,
+    activeDaysNumber?: number,
+    overtimeDaysNumber?: number,
     daysLeft?: number,
-    haveToPay?: boolean
+    status?: string //danger _ inactive _ active
 }
 
 export class Hero {
@@ -14,17 +14,31 @@ export class Hero {
         private hero: HeroInfo,
 
     ) {
-        this.hero.daysLeft = this.getDays(this.hero.startingDate, this.hero.endingDate)
-        if (this.hero.daysLeft <= 0) this.hero.haveToPay = true;
-        else this.hero.haveToPay = false;
+        this.hero.daysLeft = this.getDaysLeft(this.hero.endingDate)
+        if (this.hero.daysLeft <= 0 && this.hero.overtimeDaysNumber > 0) this.hero.status = 'danger';
+        else if (this.hero.daysLeft <= 0 && this.hero.overtimeDaysNumber == 0) this.hero.status = 'inactive'
+        else this.hero.status = 'active';
     }
 
-    getHeroInfo() {
+    public get getHeroInfo(): HeroInfo {
         return this.hero;
     }
 
-    private getDays(startDate: Date, endingDate: Date): number {
-        let timeInMs = endingDate.getTime() - startDate.getTime();
+
+    public get getStatusClass(): string {
+        switch (this.hero.status) {
+            case 'inactive':
+                return 'alert-secondary'
+            case 'danger':
+                return 'alert-danger'
+            default:
+                return '';
+        }
+    }
+
+
+    private getDaysLeft(endingDate: Date): number {
+        let timeInMs = endingDate.getTime() - new Date().getTime();
         let mins = (timeInMs / (1000 * 60));
         let days = mins / (60 * 24);
 
