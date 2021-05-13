@@ -1,4 +1,5 @@
 export interface HeroInfo {
+    _id?:string,
     name: string,
     program: string,
     startingDate: Date,

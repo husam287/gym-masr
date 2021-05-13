@@ -4,9 +4,10 @@ thead{
     background-color: $primary-color;
 }
 
-tr{
+tbody tr{
+    cursor: pointer;
     &:hover{
-        transform: scale(0.98);
+        transform: scale(0.95);
     }
 }
 

@@ -18,7 +18,7 @@ export class AddNewHeroComponent implements OnInit {
   onSubmit(form:NgForm){
     const {name,program} = form.form.value;
     this.herosService.addNewHero(name,program,new Date(Date.now()));
-    
+    form.resetForm({name:'',program:''});  
   }
 
 }

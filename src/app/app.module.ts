@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { AnimatedDigitComponent } from './shared/animated-digit/animated-digit.component';
 import { CardComponent } from './main-system/home/card/card.component';
 import { LineChartComponent } from './main-system/home/line-chart/line-chart.component';
+import { OptionMenuComponent } from './main-system/option-menu/option-menu.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { LineChartComponent } from './main-system/home/line-chart/line-chart.com
     SidebarListComponent,
     AnimatedDigitComponent,
     CardComponent,
-    LineChartComponent
+    LineChartComponent,
+    OptionMenuComponent
   ],
   imports: [
     BrowserModule,
