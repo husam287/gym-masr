@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { HerosService } from '../shared/services/heros.service';
 
 @Component({
   selector: 'app-add-new-hero',
@@ -8,13 +9,15 @@ import { NgForm } from '@angular/forms';
 })
 export class AddNewHeroComponent implements OnInit {
 
-  constructor() { }
+  constructor(private herosService:HerosService) { }
 
   ngOnInit(): void {
   }
 
+  //{name,program}
   onSubmit(form:NgForm){
-    console.log(form.form.value);
+    const {name,program} = form.form.value;
+    this.herosService.addNewHero(name,program,new Date(Date.now()));
     
   }
 

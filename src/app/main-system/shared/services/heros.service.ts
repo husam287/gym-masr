@@ -16,13 +16,54 @@ export class HerosService {
   ]
   constructor(private http: HttpClient) { }
 
-  async addNewHero(name: string, program: string) {
+  /**
+   * Function that create a new hero
+   * @param name name of the hero
+   * @param program program type
+   * @param startingDate starting date
+   */
+  async addNewHero(name: string, program: string, startingDate: Date = new Date()) {
+    const isMonth = program[0] === 'm' ? true : false;
+    let endingDate: Date;
+
+    if (isMonth)
+      endingDate = this.addMonth(startingDate);
+    else
+      endingDate = this.addDay(startingDate);
+
+    const newHero = new Hero({ name, program, startingDate, endingDate })
+    console.log(newHero);
+
+    this.heros.push(newHero);
     //await this.http.post().toPromise()
+
   }
 
-
+  /**
+   * Get copy of heros
+   */
   public get getAll(): Hero[] {
     return this.heros.slice();
   }
 
+  /**
+   * To add 1 month to a date
+   * @param date starting date
+   * @returns new date oof the next month
+   */
+  private addMonth(date: Date): Date {
+    let endDate = new Date(date);
+    endDate.setMonth(date.getMonth() + 1);
+    return endDate;
+  }
+  /**
+   * To add 1 day to a date
+   * @param date starting date
+   * @returns new date oof the next day
+   */
+  private addDay(date: Date) {
+    let endDate = new Date(date);
+    endDate.setDate(date.getDate() + 1);
+    return endDate;
+  }
 }
