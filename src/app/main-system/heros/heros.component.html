@@ -1,43 +1,74 @@
-<div (click)="_showMenu=false" style="min-height: 100vh;">
+<main (click)="_showMenu=false" style="min-height: 100vh;">
+
     <!-- Table of heros -->
-    <table *ngIf="heros.length!==0" class="table noselect">
-        <thead>
-            <tr>
-                <th scope="col" style="color: white">Name</th>
-                <th scope="col" style="color: white">Program</th>
-                <th scope="col" style="color: white">Days Left</th>
-                <th scope="col" style="color: white">Active Days</th>
-                <th scope="col" style="color: white">Over Time</th>
-    
-            </tr>
-        </thead>
-        <tbody>
-    
-            <tr
-            [ngClass]="hero.getStatusClass" 
-            *ngFor="let hero of heros;" 
-            (contextmenu)="onRightClick(hero.getHeroInfo._id,$event)" 
-            class="text-dark">
-                <th scope="row">{{hero.getHeroInfo.name}}</th>
-                <td>{{hero.getHeroInfo.program}}</td>
-                <td>{{hero.getHeroInfo.daysLeft}}</td>
-                <td class="text-success">{{hero.getHeroInfo.activeDaysNumber}}</td>
-                <td [ngClass]="hero.getHeroInfo.overtimeDaysNumber===0? 'text-dark':'text-danger'">{{hero.getHeroInfo.overtimeDaysNumber}}</td>
-            </tr>
-    
-        </tbody>
-    </table>
-    
-    <!-- if No heros Found -->
-    <div *ngIf="heros.length===0" class="VHcenter text-danger" >
-        <i class="fas fa-times-circle fa-5x mr-3"></i>
-        <strong class="h2">No Heros At The Moment!</strong>  
+    <div class="table-responsive-md">
+        <table *ngIf="heros.length!==0" class="table noselect">
+            <thead>
+                <tr>
+                    <th scope="col" style="color: white">#</th>
+                    <th scope="col" style="color: white">Attend</th>
+                    <th scope="col" style="color: white">Name</th>
+                    <th scope="col" style="color: white">Program</th>
+                    <th scope="col" style="color: white">Days Left</th>
+                    <th scope="col" style="color: white">Active Days</th>
+                    <th scope="col" style="color: white">Over Time</th>
+
+
+
+
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr [ngClass]="hero.getStatusClass" 
+                    *ngFor="let hero of heros; let i=index"
+                    (contextmenu)="onRightClick(hero.getHeroInfo._id,i,$event)" 
+                    class="text-dark">
+                    <!-- ID -->
+                    <th scope="row">
+                        {{hero.getHeroInfo._id}}
+                    </th>
+                    <!-- Check Button -->
+                    <td>
+                        <button class="btn btn-success btn-sm">
+                            <i class="fas fa-check"></i>
+                        </button> 
+                    </td>
+                    <!-- Name -->
+                    <td >
+                        {{hero.getHeroInfo.name}}
+                    </td>
+                    <!-- Program -->
+                    <td>
+                        {{hero.getHeroInfo.program}}
+                    </td>
+                    <!-- DaysLeft -->
+                    <td>
+                        {{hero.getHeroInfo.daysLeft}}
+                    </td>
+                    <!-- ActiveDays -->
+                    <td class="text-success">
+                        {{hero.getHeroInfo.activeDaysNumber}}
+                    </td>
+                    <!-- OverTime -->
+                    <td [ngClass]="hero.getHeroInfo.overtimeDaysNumber===0? 'text-dark':'text-danger'">
+                        {{hero.getHeroInfo.overtimeDaysNumber}}
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
     </div>
-    
+
+
+    <!-- if No heros Found -->
+    <div *ngIf="heros.length===0" class="VHcenter text-danger">
+        <i class="fas fa-times-circle fa-5x mr-3"></i>
+        <strong class="h2">No Heros At The Moment!</strong>
+    </div>
+
     <!-- Floating Menu -->
-    <app-option-menu [show]="_showMenu" [_id]="currentElementId" [position]="{yPos:menuYpos,xPos:menuXpos}"></app-option-menu>
+    <app-option-menu [show]="_showMenu" [_id]="currentElementId" [index]="currentIndex" [position]="{yPos:menuYpos,xPos:menuXpos}">
+    </app-option-menu>
 
-</div>
-
-
-
+</main>

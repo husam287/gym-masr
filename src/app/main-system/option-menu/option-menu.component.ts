@@ -7,6 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class OptionMenuComponent implements OnInit {
   @Input('_id') _id:string;
+  @Input('index') index:number;
   @Input('show') show:boolean;
   @Input('position') position:{'xPos':number,'yPos':number};
 

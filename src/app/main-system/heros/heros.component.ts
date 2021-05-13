@@ -15,6 +15,7 @@ export class HerosComponent implements OnInit {
   heros: Hero[] = [];
 
   currentElementId: string;
+  currentIndex: number;
   _showMenu = false;
   menuXpos: number;
   menuYpos: number;
@@ -26,7 +27,7 @@ export class HerosComponent implements OnInit {
     console.log(this.heros)
   }
 
-  onRightClick(_id: string, event: MouseEvent) {
+  onRightClick(_id: string, index: number, event: MouseEvent) {
     console.log(event);
     const screenWidth = event.view.innerWidth;
     const screenHight = event.view.innerHeight;
@@ -35,22 +36,27 @@ export class HerosComponent implements OnInit {
     const menuWidth = environment.optionMenuWidth;
     const menuHight = environment.optionMenuHight;
 
-    if ((menuWidth + clickedXpos) > screenWidth) clickedXpos -= menuWidth;
+    if (((menuWidth + clickedXpos) > screenWidth) && ((clickedXpos-menuWidth) < 0))
+      clickedXpos -= menuWidth/2;
+    else if ((menuWidth + clickedXpos) > screenWidth) 
+      clickedXpos -= menuWidth;
+
     if ((menuHight + clickedYpos) > screenHight) clickedYpos -= menuHight;
 
-    this.showMenu(_id, clickedXpos, clickedYpos);
+    this.showMenu(_id, index, clickedXpos, clickedYpos);
     return false;
   }
 
 
   /**
    * function to show and adjust position on the menu
-   * @param _id id of the hero
+   * @param index id of the hero
    * @param xPos screen x position 
    * @param yPos screen y position
    */
-  private showMenu(_id: string, xPos: number, yPos: number) {
+  private showMenu(_id: string, index: number, xPos: number, yPos: number) {
     this._showMenu = true;
+    this.currentIndex = index;
     this.currentElementId = _id;
     this.menuXpos = xPos;
     this.menuYpos = yPos;
