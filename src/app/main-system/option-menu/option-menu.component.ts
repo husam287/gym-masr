@@ -9,6 +9,8 @@ export class OptionMenuComponent implements OnInit {
   @Input('_id') _id:string;
   @Input('show') show:boolean;
   @Input('position') position:{'xPos':number,'yPos':number};
+
+  
   
   constructor() { }
 

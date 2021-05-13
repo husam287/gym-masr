@@ -1,4 +1,5 @@
-import {Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 
 import { Hero } from '../shared/models/hero.model';
@@ -12,12 +13,12 @@ import { HerosService } from '../shared/services/heros.service';
 export class HerosComponent implements OnInit {
 
   heros: Hero[] = [];
-  
-  currentElementId:string;
-  _showMenu=false;
-  menuXpos:number;
-  menuYpos:number;
- 
+
+  currentElementId: string;
+  _showMenu = false;
+  menuXpos: number;
+  menuYpos: number;
+
   constructor(private herosService: HerosService) { }
 
   ngOnInit(): void {
@@ -27,11 +28,21 @@ export class HerosComponent implements OnInit {
 
   onRightClick(_id: string, event: MouseEvent) {
     console.log(event);
-    this.showMenu(_id,event.pageX,event.pageY);
+    const screenWidth = event.view.innerWidth;
+    const screenHight = event.view.innerHeight;
+    let clickedXpos = event.pageX;
+    let clickedYpos = event.pageY;
+    const menuWidth = environment.optionMenuWidth;
+    const menuHight = environment.optionMenuHight;
+
+    if ((menuWidth + clickedXpos) > screenWidth) clickedXpos -= menuWidth;
+    if ((menuHight + clickedYpos) > screenHight) clickedYpos -= menuHight;
+
+    this.showMenu(_id, clickedXpos, clickedYpos);
     return false;
   }
-  
-  
+
+
   /**
    * function to show and adjust position on the menu
    * @param _id id of the hero
@@ -39,8 +50,8 @@ export class HerosComponent implements OnInit {
    * @param yPos screen y position
    */
   private showMenu(_id: string, xPos: number, yPos: number) {
-    this._showMenu=true;
-    this.currentElementId=_id;
+    this._showMenu = true;
+    this.currentElementId = _id;
     this.menuXpos = xPos;
     this.menuYpos = yPos;
   }
