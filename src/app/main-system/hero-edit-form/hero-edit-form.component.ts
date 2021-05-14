@@ -16,8 +16,8 @@ export class HeroEditFormComponent implements OnInit{
   @Input('hero') hero: Hero;
 
   @Output('editedHero') editedHero:EventEmitter<Hero> = new EventEmitter();
+  @Output('date') dateToSubmit: EventEmitter<Date> = new EventEmitter();
 
-  finalDate: Date; //to be submitted (if undef => =to hero.startDate)
 
   constructor(private dateFunctions:DateFunctionsService) { }
 
@@ -26,8 +26,7 @@ export class HeroEditFormComponent implements OnInit{
   }
   
   onSelectDate(event) {
-    this.finalDate = event;
-    console.log(this.finalDate)
+    this.dateToSubmit.emit(event);
   }
 
 

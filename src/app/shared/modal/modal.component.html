@@ -1,35 +1,32 @@
-<!-- Button trigger modal -->
-<button #open type="button" class="btn btn-primary d-none" data-toggle="modal" data-target="#exampleModal"></button>
-
 <!-- Modal -->
-<div (contextmenu)="preventRightClick()" class="modal fade" id="exampleModal" tabindex="-1"
-  aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" [ngClass]="'alert-'+type">
-      <div class="modal-header">
-        <!-- Header Text -->
-        <h5 class="modal-title" id="exampleModalLabel">{{header}}</h5>
-        <!-- Close Button -->
-        <button #close type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div *ngIf="body" class="modal-body">
-        <!-- Body Text -->
-        <div class="mb-5">
-          {{body}}
-        </div>
+<ng-template (contextmenu)="preventRightClick()" #content let-modal>
+  <div class="modal-header text-light" [ngClass]="'bg-'+type">
+    <!-- Header Text -->
+    <h5 class="modal-title" >{{header}}</h5>
+    <!-- Close Button -->
+    <button type="button" class="close text-light" aria-label="Close" (click)="modal.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
 
-        <!-- Anothor Forms -->
-        <app-date-selector *ngIf="purpose==='renew'" (date)="onSelectDate($event)"></app-date-selector>
-        <app-hero-edit-form *ngIf="purpose==='edit'"  [hero]="hero"></app-hero-edit-form>
-
-      </div>
-      <!-- Footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button (click)="onSubmit()" type="button" [ngClass]="['btn-'+type,!type?'btn-success':'']" class="btn">{{actionButton}}</button>
-      </div>
-    </div>
   </div>
-</div>
+  <div *ngIf="body" class="modal-body">
+    <!-- Body Text -->
+    <div class="mb-5">
+      {{body}}
+    </div>
+
+    <!-- Anothor Forms -->
+    <app-date-selector *ngIf="purpose==='renew'" (date)="onSelectDate($event)"></app-date-selector>
+    <app-hero-edit-form *ngIf="purpose==='edit'" (date)="onSelectDate($event)" [hero]="hero"></app-hero-edit-form>
+
+  </div>
+  <!-- Footer -->
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('Cancel')" data-dismiss="modal">Cancel</button>
+    <button (click)="onSubmit(modal)" type="button" [ngClass]="['btn-'+type,!type?'btn-success':'']"
+      class="btn">{{actionButton}}</button>
+  </div>
+</ng-template>
+
+<!-- Button trigger modal -->
+<button #openButtonRef type="button" (click)="open(content)" class="btn btn-primary d-none"></button>

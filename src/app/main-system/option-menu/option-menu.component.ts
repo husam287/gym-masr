@@ -50,7 +50,7 @@ export class OptionMenuComponent implements OnInit {
 
   onEdit() {
     this.openModal({
-      type: '',
+      type: 'dark',
       header: `Edit`,
       body: `Edit (${this.hero.getHeroInfo.name})'s info`,
       buttonString: 'Save',

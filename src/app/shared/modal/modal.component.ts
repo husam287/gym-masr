@@ -1,5 +1,6 @@
-import { Component, ComponentRef, ElementRef, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { EventEmitter } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Hero } from 'src/app/main-system/shared/models/hero.model';
 
 @Component({
@@ -10,27 +11,31 @@ import { Hero } from 'src/app/main-system/shared/models/hero.model';
 export class ModalComponent implements OnInit, OnDestroy {
   @Output('openButton') openButton: EventEmitter<ElementRef<HTMLElement>> = new EventEmitter();
 
-  @ViewChild('open', { static: true }) open: ElementRef<HTMLElement>;
-  @ViewChild('close') close: ElementRef<HTMLElement>;
-
   @Input('header') header: string;
-  @Input('type') type: string = "";
+  @Input('type') type: string = "dark";
   @Input('hero') hero: Hero = null;
   @Input('body') body: string = null;
   @Input('purpose') purpose: string = null;
   @Input('actionButton') actionButton: string = 'ok';
+  
+  @ViewChild('openButtonRef',{static:true}) openButtonRef:ElementRef<HTMLElement>;
 
-
-  selectedDate = new Date();
-  constructor() { }
+  selectedDate:Date;
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    this.openButton.emit(this.open);
-    this.openButton.unsubscribe();
+    this.openButton.emit(this.openButtonRef);
   }
+
   ngOnDestroy() {
-    this.close.nativeElement.click()
   }
+
+  open(content) {
+    this.selectedDate=null;
+    this.modalService.open(content).result.then()
+  }
+ 
+
 
   preventRightClick() {
     return false;
@@ -40,10 +45,12 @@ export class ModalComponent implements OnInit, OnDestroy {
     this.selectedDate = selectedDate;
   } 
 
-  onSubmit(){
-    console.log(this.selectedDate);
+  onSubmit(modal){
+    if(!this.selectedDate && this.purpose==='renew') this.selectedDate=new Date();
+    if(!this.selectedDate && this.purpose==='edit') this.selectedDate=this.hero.getHeroInfo.startingDate;
 
-    this.close.nativeElement.click();
+    console.log(this.selectedDate);
+    modal.close();
   }
   
  
