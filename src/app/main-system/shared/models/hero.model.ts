@@ -1,19 +1,21 @@
+import { DateFunctionsService } from "src/app/shared/services/date-functions.service";
+
 export interface HeroInfo {
     _id?:string,
     name: string,
     program: string,
     startingDate: Date,
     endingDate: Date,
+    attendToday?:boolean,
     activeDaysNumber?: number,
     overtimeDaysNumber?: number,
     daysLeft?: number,
     status?: string //danger _ inactive _ active
 }
 
-export class Hero {
+export class Hero {    
     constructor(
         private hero: HeroInfo,
-
     ) {
         //status and daysLeft number init
         this.hero.daysLeft = this.getDaysLeft(this.hero.endingDate)
@@ -33,6 +35,7 @@ export class Hero {
         return this.hero;
     }
 
+
     /**
      * Get a proper bootstrap class to represent the hero status
      */
@@ -45,6 +48,10 @@ export class Hero {
             default:
                 return '';
         }
+    }
+
+    public markAttendance(){
+        this.hero.attendToday=true;
     }
 
     /**

@@ -1,0 +1,14 @@
+<form class="form-inline">
+    <label class="py-1 pr-2" (click)="d.toggle()">{{label}}</label>
+    <div class="form-group">
+        <div class="input-group">
+            <input  (dateSelect)="onDateSelect($event)" class="form-control" placeholder="yyyy-mm-dd" name="dp"
+                [ngModel]="{year:date.getFullYear(),month:date.getMonth()+1,day:date.getDate()}" ngbDatepicker #d="ngbDatepicker">
+            <div class="input-group-append">
+                <button  class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
+                    <i class="fas fa-calendar"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

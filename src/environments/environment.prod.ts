@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  menuWidth: 267.625,
-  optionMenuHight: 306
+  menuWidth: 137.625,
+  optionMenuHight: 184
 };

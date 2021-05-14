@@ -12,10 +12,6 @@
                     <th scope="col" style="color: white">Days Left</th>
                     <th scope="col" style="color: white">Active Days</th>
                     <th scope="col" style="color: white">Over Time</th>
-
-
-
-
                 </tr>
             </thead>
             <tbody>
@@ -29,10 +25,11 @@
                         {{hero.getHeroInfo._id}}
                     </th>
                     <!-- Check Button -->
-                    <td>
-                        <button class="btn btn-success btn-sm">
+                    <td class="text-center">
+                        <button (click)="markAttend(i,hero.getHeroInfo._id)" *ngIf="!hero.getHeroInfo.attendToday" class="btn btn-success btn-sm">
                             <i class="fas fa-check"></i>
-                        </button> 
+                        </button>
+                        <i *ngIf="hero.getHeroInfo.attendToday" class="fas fa-check-double text-success"></i> 
                     </td>
                     <!-- Name -->
                     <td >
@@ -68,7 +65,7 @@
     </div>
 
     <!-- Floating Menu -->
-    <app-option-menu [show]="_showMenu" [_id]="currentElementId" [index]="currentIndex" [position]="{yPos:menuYpos,xPos:menuXpos}">
+    <app-option-menu [show]="_showMenu" [hero]="heros[currentIndex]" [index]="currentIndex" [position]="{yPos:menuYpos,xPos:menuXpos}">
     </app-option-menu>
 
 </main>

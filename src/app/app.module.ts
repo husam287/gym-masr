@@ -14,6 +14,10 @@ import { AnimatedDigitComponent } from './shared/animated-digit/animated-digit.c
 import { CardComponent } from './main-system/home/card/card.component';
 import { LineChartComponent } from './main-system/home/line-chart/line-chart.component';
 import { OptionMenuComponent } from './main-system/option-menu/option-menu.component';
+import { ModalComponent } from './shared/modal/modal.component';
+import { DateSelectorComponent } from './main-system/date-selector/date-selector.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { HeroEditFormComponent } from './main-system/hero-edit-form/hero-edit-form.component';
 
 @NgModule({
   declarations: [
@@ -25,12 +29,16 @@ import { OptionMenuComponent } from './main-system/option-menu/option-menu.compo
     AnimatedDigitComponent,
     CardComponent,
     LineChartComponent,
-    OptionMenuComponent
+    OptionMenuComponent,
+    ModalComponent,
+    DateSelectorComponent,
+    HeroEditFormComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    NgbModule,
     SidebarModule.forRoot(),
     AppRoutingModule
   ],

@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  optionMenuWidth: 267.625,
-  optionMenuHight: 306
+  optionMenuWidth: 137.625,
+  optionMenuHight: 184
 };
 
 /*

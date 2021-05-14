@@ -1,0 +1,22 @@
+<form #form="ngForm">
+    <!-- Name Input -->
+    <div class="form-group border" [ngClass]=" (!name.valid&&name.touched)? 'border-danger':'' ">
+        <input required class="form-control" type="text" [ngModel]="hero.getHeroInfo.name" #name="ngModel" name="name" placeholder="Name">
+    </div>
+    
+    <!-- Program Select -->
+    <div class="form-group border" [ngClass]=" (!program.valid&&program.touched)? 'border-danger':'' ">
+        <select required  class="form-control" name="program" [ngModel]="hero.getHeroInfo.program" #program="ngModel">
+            <option value="" selected hidden>Select Program</option>
+            <option value="daily">Daily (1 Day)</option>
+            <option value="monthly">Monthly (30 Day - 250 LE)</option>
+            <option value="monthlyPlus">Monthly Plus (30 Day - 300 LE)</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <app-date-selector [initDate]="hero.getHeroInfo.startingDate" (date)="onSelectDate($event)"></app-date-selector>
+    </div>
+
+
+</form>

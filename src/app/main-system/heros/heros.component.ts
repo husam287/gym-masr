@@ -24,11 +24,9 @@ export class HerosComponent implements OnInit {
 
   ngOnInit(): void {
     this.heros = this.herosService.getAll;
-    console.log(this.heros)
   }
 
   onRightClick(_id: string, index: number, event: MouseEvent) {
-    console.log(event);
     const screenWidth = event.view.innerWidth;
     const screenHight = event.view.innerHeight;
     let clickedXpos = event.pageX;
@@ -46,6 +44,12 @@ export class HerosComponent implements OnInit {
     this.showMenu(_id, index, clickedXpos, clickedYpos);
     return false;
   }
+
+  markAttend(index:number,_id:string){
+    this.herosService.makeAttendance(index,_id);
+  }
+
+  
 
 
   /**
