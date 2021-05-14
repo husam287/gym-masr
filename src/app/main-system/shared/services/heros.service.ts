@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { DateFunctionsService } from 'src/app/shared/services/date-functions.service';
 import { Hero } from '../models/hero.model';
 
@@ -13,9 +14,11 @@ export class HerosService {
     new Hero({ _id: '2', attendToday: false, name: 'أوتاكا المصري', program: 'daily', startingDate: new Date('2021-05-10'), endingDate: new Date('2021-06-13'), activeDaysNumber: 1, overtimeDaysNumber: 0 }),
     new Hero({ _id: '3', attendToday: false, name: 'Al Kowaa', program: 'monthly', startingDate: new Date('2021-04-10'), endingDate: new Date('2021-05-10'), activeDaysNumber: 18, overtimeDaysNumber: 1 }),
     new Hero({ _id: '4', attendToday: false, name: 'Mohamed', program: 'monthlyPlus', startingDate: new Date('2021-04-10'), endingDate: new Date('2021-05-1'), activeDaysNumber: 18, overtimeDaysNumber: 0 }),
-
   ]
-  constructor(private http: HttpClient, private dateOp: DateFunctionsService) { }
+
+  private deletedIndex = new Subject<number>();
+
+  constructor(private http: HttpClient) { }
 
   /**
    * Get copy of heros
@@ -28,15 +31,20 @@ export class HerosService {
   }
 
   /**
+   * Get deleted index observable
+   */
+  public get deletedIndexObservable() : Subject<number> {
+    return this.deletedIndex;
+  }
+  
+
+  /**
    * Function that create a new hero
    * @param name name of the hero
    * @param program program type
    * @param startingDate starting date
    */
   async addNewHero(name: string, program: string, startingDate: Date = new Date()) {
-
-    //init ending date
-    let endingDate: Date = this.initEndingTime(startingDate, program);
 
     const newHero = new Hero({ name, program, startingDate})
     console.log(newHero);
@@ -79,6 +87,15 @@ export class HerosService {
     console.log(this.heros[index].getHeroInfo.startingDate);
     //into server
     //this.http.post()
+  }
+
+  deleteHero(index:number,_id:string){
+    this.heros.splice(index,1); //delete locally
+    this.deletedIndex.next(index);
+    console.log("deleted")
+
+    //delete from server
+    //this.http.delete()
   }
 
 

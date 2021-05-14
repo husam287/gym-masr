@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 
@@ -10,7 +11,7 @@ import { HerosService } from '../shared/services/heros.service';
   templateUrl: './heros.component.html',
   styleUrls: ['./heros.component.scss']
 })
-export class HerosComponent implements OnInit {
+export class HerosComponent implements OnInit,OnDestroy {
 
   heros: Hero[] = [];
 
@@ -20,10 +21,21 @@ export class HerosComponent implements OnInit {
   menuXpos: number;
   menuYpos: number;
 
+  subs1:Subscription;
   constructor(private herosService: HerosService) { }
 
   ngOnInit(): void {
+    //get copy of heros
     this.heros = this.herosService.getAll;
+
+    //Observe deleted index to be deleted from this.heros
+    this.subs1 = this.herosService.deletedIndexObservable.subscribe(deletedIndex=>{
+      this.heros.splice(deletedIndex,1);
+    })
+  }
+
+  ngOnDestroy(){
+    this.subs1.unsubscribe();
   }
 
   onRightClick(_id: string, index: number, event: MouseEvent) {

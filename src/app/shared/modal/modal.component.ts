@@ -67,6 +67,9 @@ export class ModalComponent implements OnInit, OnDestroy {
     else if(this.purpose === 'renew'){
       this.heroServices.renewSubscription(this.heroIndex,this.hero.getHeroInfo._id,this.selectedDate);
     }
+    else if(this.purpose === 'delete'){
+      this.heroServices.deleteHero(this.heroIndex,this.hero.getHeroInfo._id);
+    }
     
     modal.close();
   }
