@@ -74,6 +74,11 @@ export class HerosService {
 
   renewSubscription(index:number,_id:string,startingDate:Date){
     this.heros[index].startingDate = startingDate;
+    this.heros[index].clearFlags();
+    
+    console.log(this.heros[index].getHeroInfo.startingDate);
+    //into server
+    //this.http.post()
   }
 
 

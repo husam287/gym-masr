@@ -49,22 +49,23 @@ export class ModalComponent implements OnInit, OnDestroy {
     this.selectedDate = selectedDate;
   }
   onEditHero(editedHero: any) {
-    this.editedHero.name=editedHero.name;
-    this.editedHero.program=editedHero.program;
+    this.editedHero.name = editedHero.name;
+    this.editedHero.program = editedHero.program;
   }
 
   onSubmit(modal) {
-    if (!this.selectedDate && this.purpose === 'renew') this.selectedDate = new Date();
+    if (!this.selectedDate && this.purpose === 'renew') this.selectedDate = this.hero.getHeroInfo.endingDate;
 
-    if(this.purpose==='edit'){
-      console.log(this.editedHero)
-      
+    if (this.purpose === 'edit') {
       this.heroServices.editHero({
-        index:this.heroIndex,
-        _id:this.hero.getHeroInfo._id,
-        name:this.editedHero.name,
-        program:this.editedHero.program,
+        index: this.heroIndex,
+        _id: this.hero.getHeroInfo._id,
+        name: this.editedHero.name,
+        program: this.editedHero.program,
       })
+    }
+    else if(this.purpose === 'renew'){
+      this.heroServices.renewSubscription(this.heroIndex,this.hero.getHeroInfo._id,this.selectedDate);
     }
     
     modal.close();

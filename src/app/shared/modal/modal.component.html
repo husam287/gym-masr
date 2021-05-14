@@ -16,7 +16,7 @@
     </div>
 
     <!-- Anothor Forms -->
-    <app-date-selector *ngIf="purpose==='renew'" (date)="onSelectDate($event)"></app-date-selector>
+    <app-date-selector [initDate]="hero.getHeroInfo.endingDate" *ngIf="purpose==='renew'" (date)="onSelectDate($event)"></app-date-selector>
     <app-hero-edit-form *ngIf="purpose==='edit'" (editedHero)="onEditHero($event)" [hero]="hero"></app-hero-edit-form>
 
   </div>

@@ -72,12 +72,23 @@ export class Hero {
     public set startingDate(startingDate: Date) {
         this.hero.startingDate = startingDate;
         this.initEndingTime();
+        this.initStatusAndDaysLeft();
     }
 
    
 
     public markAttendance() {
         this.hero.attendToday = true;
+        if(this.hero.daysLeft<=0)
+            this.hero.overtimeDaysNumber++;
+        else
+            this.hero.activeDaysNumber++;
+    }
+
+    public clearFlags(){
+        this.hero.activeDaysNumber=0;
+        this.hero.overtimeDaysNumber=0;
+        this.hero.attendToday=false;
     }
 
     /**
