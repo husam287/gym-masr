@@ -9,27 +9,26 @@ import { HerosService } from '../shared/services/heros.service';
   templateUrl: './hero-edit-form.component.html',
   styleUrls: ['./hero-edit-form.component.scss']
 })
-export class HeroEditFormComponent implements OnInit{
+export class HeroEditFormComponent implements OnInit {
 
   @ViewChild('form', { static: true }) form: NgForm;
 
   @Input('hero') hero: Hero;
 
-  @Output('editedHero') editedHero:EventEmitter<Hero> = new EventEmitter();
-  @Output('date') dateToSubmit: EventEmitter<Date> = new EventEmitter();
+  @Output('editedHero') editedHero: EventEmitter<any> = new EventEmitter();
 
 
-  constructor(private dateFunctions:DateFunctionsService) { }
+  constructor(private dateFunctions: DateFunctionsService) { }
 
   ngOnInit(): void {
-   
-  }
-  
-  onSelectDate(event) {
-    this.dateToSubmit.emit(event);
+    this.form.form.valueChanges.subscribe(result => {
+      if (result.program && result.name)
+        this.editedHero.emit(result);
+    })
   }
 
 
-  
+
+
 
 }

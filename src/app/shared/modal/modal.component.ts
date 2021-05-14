@@ -2,6 +2,7 @@ import { Component, ElementRef, Input, OnDestroy, OnInit, Output, ViewChild } fr
 import { EventEmitter } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Hero } from 'src/app/main-system/shared/models/hero.model';
+import { HerosService } from 'src/app/main-system/shared/services/heros.service';
 
 @Component({
   selector: 'app-modal',
@@ -13,15 +14,17 @@ export class ModalComponent implements OnInit, OnDestroy {
 
   @Input('header') header: string;
   @Input('type') type: string = "dark";
+  @Input('heroIndex') heroIndex: number;
   @Input('hero') hero: Hero = null;
   @Input('body') body: string = null;
   @Input('purpose') purpose: string = null;
   @Input('actionButton') actionButton: string = 'ok';
-  
-  @ViewChild('openButtonRef',{static:true}) openButtonRef:ElementRef<HTMLElement>;
 
-  selectedDate:Date;
-  constructor(private modalService: NgbModal) { }
+  @ViewChild('openButtonRef', { static: true }) openButtonRef: ElementRef<HTMLElement>;
+
+  selectedDate: Date;
+  editedHero: { name: string, program: string };
+  constructor(private modalService: NgbModal, private heroServices: HerosService) { }
 
   ngOnInit(): void {
     this.openButton.emit(this.openButtonRef);
@@ -31,10 +34,11 @@ export class ModalComponent implements OnInit, OnDestroy {
   }
 
   open(content) {
-    this.selectedDate=null;
-    this.modalService.open(content).result.then().catch(reason=>console.log(reason));
+    this.selectedDate = null;
+    this.editedHero = { name: this.hero.getHeroInfo.name, program: this.hero.getHeroInfo.program };
+    this.modalService.open(content).result.then().catch(reason => console.log(reason));
   }
- 
+
 
 
   preventRightClick() {
@@ -43,18 +47,31 @@ export class ModalComponent implements OnInit, OnDestroy {
 
   onSelectDate(selectedDate: Date) {
     this.selectedDate = selectedDate;
-  } 
+  }
+  onEditHero(editedHero: any) {
+    this.editedHero.name=editedHero.name;
+    this.editedHero.program=editedHero.program;
+  }
 
-  onSubmit(modal){
-    if(!this.selectedDate && this.purpose==='renew') this.selectedDate=new Date();
-    if(!this.selectedDate && this.purpose==='edit') this.selectedDate=this.hero.getHeroInfo.startingDate;
+  onSubmit(modal) {
+    if (!this.selectedDate && this.purpose === 'renew') this.selectedDate = new Date();
 
-    console.log(this.selectedDate);
+    if(this.purpose==='edit'){
+      console.log(this.editedHero)
+      
+      this.heroServices.editHero({
+        index:this.heroIndex,
+        _id:this.hero.getHeroInfo._id,
+        name:this.editedHero.name,
+        program:this.editedHero.program,
+      })
+    }
+    
     modal.close();
   }
-  
- 
-  
+
+
+
 
 
 
