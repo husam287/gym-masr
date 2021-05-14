@@ -11,17 +11,22 @@ import { HerosService } from '../shared/services/heros.service';
   templateUrl: './heros.component.html',
   styleUrls: ['./heros.component.scss']
 })
-export class HerosComponent implements OnInit,OnDestroy {
+export class HerosComponent implements OnInit, OnDestroy {
 
   heros: Hero[] = [];
 
   currentElementId: string;
   currentIndex: number;
+
+
   _showMenu = false;
   menuXpos: number;
   menuYpos: number;
 
-  subs1:Subscription;
+  filterData: string;
+  searchData: string;
+
+  subs1: Subscription;
   constructor(private herosService: HerosService) { }
 
   ngOnInit(): void {
@@ -29,12 +34,12 @@ export class HerosComponent implements OnInit,OnDestroy {
     this.heros = this.herosService.getAll;
 
     //Observe deleted index to be deleted from this.heros
-    this.subs1 = this.herosService.deletedIndexObservable.subscribe(deletedIndex=>{
-      this.heros.splice(deletedIndex,1);
+    this.subs1 = this.herosService.deletedIndexObservable.subscribe(deletedIndex => {
+      this.heros.splice(deletedIndex, 1);
     })
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.subs1.unsubscribe();
   }
 
@@ -46,9 +51,9 @@ export class HerosComponent implements OnInit,OnDestroy {
     const menuWidth = environment.optionMenuWidth;
     const menuHight = environment.optionMenuHight;
 
-    if (((menuWidth + clickedXpos) > screenWidth) && ((clickedXpos-menuWidth) < 0))
-      clickedXpos -= menuWidth/2;
-    else if ((menuWidth + clickedXpos) > screenWidth) 
+    if (((menuWidth + clickedXpos) > screenWidth) && ((clickedXpos - menuWidth) < 0))
+      clickedXpos -= menuWidth / 2;
+    else if ((menuWidth + clickedXpos) > screenWidth)
       clickedXpos -= menuWidth;
 
     if ((menuHight + clickedYpos) > screenHight) clickedYpos -= menuHight;
@@ -57,11 +62,21 @@ export class HerosComponent implements OnInit,OnDestroy {
     return false;
   }
 
-  markAttend(index:number,_id:string){
-    this.herosService.makeAttendance(index,_id);
+  markAttend(index: number, _id: string) {
+    this.herosService.makeAttendance(index, _id);
   }
 
-  
+  viewSearchData(event: string) {
+    this.searchData = event;
+    console.log(event)
+  }
+
+  viewFilterData(event: string) {
+    this.filterData = event
+    console.log(event)
+  }
+
+
 
 
   /**

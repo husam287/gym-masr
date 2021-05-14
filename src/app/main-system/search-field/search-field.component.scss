@@ -1,0 +1,14 @@
+.dropdown-toggle{
+    &::before{
+        display: none;
+    }
+}
+
+.correctPosition{
+    position: relative;
+    bottom: 10px;
+}
+.dropdown-menu{
+    background-color: transparent;
+    border: 0px;
+}

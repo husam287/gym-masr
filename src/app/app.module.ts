@@ -18,6 +18,8 @@ import { ModalComponent } from './shared/modal/modal.component';
 import { DateSelectorComponent } from './main-system/date-selector/date-selector.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HeroEditFormComponent } from './main-system/hero-edit-form/hero-edit-form.component';
+import { FilterFieldComponent } from './main-system/filter-field/filter-field.component';
+import { SearchFieldComponent } from './main-system/search-field/search-field.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import { HeroEditFormComponent } from './main-system/hero-edit-form/hero-edit-fo
     ModalComponent,
     DateSelectorComponent,
     HeroEditFormComponent,
+    FilterFieldComponent,
+    SearchFieldComponent,
   ],
   imports: [
     BrowserModule,

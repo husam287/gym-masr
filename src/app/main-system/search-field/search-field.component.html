@@ -1,0 +1,13 @@
+<div class="btn-group dropleft justify-content-end">
+    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="false">
+        <i class="fas fa-search"></i>
+    </button>
+    <div class="dropdown-menu py-0 my-0">
+        <!-- Dropdown menu links -->
+        <form #form="ngForm" class="form-inline correctPosition">
+            <input type="text" ngModel name="search" class="form-control h-100 "
+                placeholder="Search">
+        </form>
+    </div>
+</div>
