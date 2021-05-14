@@ -32,7 +32,7 @@ export class ModalComponent implements OnInit, OnDestroy {
 
   open(content) {
     this.selectedDate=null;
-    this.modalService.open(content).result.then()
+    this.modalService.open(content).result.then().catch(reason=>console.log(reason));
   }
  
 
