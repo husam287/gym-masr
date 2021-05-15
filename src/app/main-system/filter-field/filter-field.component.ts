@@ -9,7 +9,10 @@ import { Subscription } from 'rxjs';
 })
 export class FilterFieldComponent implements OnInit,OnDestroy {
   @ViewChild('form',{static:true}) form:NgForm;
+  @ViewChild('clearButton',{static:true}) clearButton:ElementRef<HTMLElement>;
+
   @Output('filterDate') filterDataEmitter:EventEmitter<string> = new EventEmitter();
+  @Output('clearButtonRef') clearButtonRef:EventEmitter<ElementRef<HTMLElement>> = new EventEmitter();
 
   filterInputDate="";
 
@@ -20,6 +23,7 @@ export class FilterFieldComponent implements OnInit,OnDestroy {
     this.subs = this.form.form.valueChanges.subscribe(filterDate=>{
       this.filterDataEmitter.emit(filterDate.filter);
     })
+    this.clearButtonRef.emit(this.clearButton);
   }
 
   ngOnDestroy(){

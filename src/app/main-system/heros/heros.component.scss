@@ -4,3 +4,13 @@ thead{
     background-color: $primary-color;
 }
 
+tr{
+    i{
+        cursor: pointer;
+        padding: 0.5rem;
+        &:hover,&:active{
+            transform: scale(1.1);
+        }
+    }   
+        
+}

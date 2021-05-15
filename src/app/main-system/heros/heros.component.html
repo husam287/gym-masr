@@ -1,10 +1,10 @@
 <div class="row justify-content-between">
     <div class="col-md-3 col-12">
-        <app-filter-field (filterDate)="viewFilterData($event)"></app-filter-field>
+        <app-filter-field (clearButtonRef)="setFilterClearButton($event)" (filterDate)="viewFilterData($event)"></app-filter-field>
     </div>
     <div class="col-md-6 col-12">
         <div class="text-right">
-            <app-search-field (searchData)="viewSearchData($event)"></app-search-field>
+            <app-search-field (clearButtonRef)="setSearchClearButton($event)" (searchData)="viewSearchData($event)"></app-search-field>
         </div>
     </div>
 </div>
@@ -16,19 +16,19 @@
         <table *ngIf="heros.length!==0" class="table noselect">
             <thead>
                 <tr>
-                    <th scope="col" style="color: white">#</th>
-                    <th scope="col" style="color: white" class="text-center">Attend</th>
-                    <th scope="col" style="color: white">Name</th>
-                    <th scope="col" style="color: white">Program</th>
-                    <th scope="col" style="color: white">Days Left</th>
-                    <th scope="col" style="color: white">Active Days</th>
-                    <th scope="col" style="color: white">Over Time</th>
+                    <th scope="col" style="color: white" class="pb-3">#</th>
+                    <th scope="col" style="color: white" class="text-center">Attend <i (click)="key='getHeroInfo.status';reverse=!reverse" class="fas fa-sort d-md-inline-block d-block"></i></th>
+                    <th scope="col" style="color: white">Name <i (click)="key='getHeroInfo.name';reverse=!reverse" class="fas fa-sort d-md-inline-block d-block"></i></th>
+                    <th scope="col" style="color: white">Program <i (click)="key='getHeroInfo.program';reverse=!reverse" class="fas fa-sort d-md-inline-block d-block"></i></th>
+                    <th scope="col" style="color: white">Days Left <i (click)="key='getHeroInfo.daysLeft';reverse=!reverse" class="fas fa-sort d-md-inline-block d-block"></i></th>
+                    <th scope="col" style="color: white">Active Days <i (click)="key='getHeroInfo.activeDaysNumber';reverse=!reverse" class="fas fa-sort d-md-inline-block d-block"></i></th>
+                    <th scope="col" style="color: white">Over Time <i (click)="key='getHeroInfo.overtimeDaysNumber';reverse=!reverse" class="fas fa-sort d-md-inline-block d-block"></i></th>
                 </tr>
             </thead>
             <tbody>
 
                 <tr [ngClass]="hero.getStatusClass" 
-                    *ngFor="let hero of heros; let i=index"
+                    *ngFor="let hero of heros | orderBy:key:reverse ; let i=index;"
                     (contextmenu)="onRightClick(hero.getHeroInfo._id,i,$event)" 
                     class="text-dark">
                     <!-- ID -->

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -19,10 +19,22 @@ export class HerosComponent implements OnInit, OnDestroy {
   currentElementId: string;
   currentIndex: number;
 
+  //States
+  searchingState = false;
+  filteringState = false;
+
   //Menu Positioning
   _showMenu = false;
   menuXpos: number;
   menuYpos: number;
+
+  //clearingButtonsRefs
+  searchClearButton:ElementRef<HTMLElement>
+  filterClearButton:ElementRef<HTMLElement>
+
+  //Sorting key
+  key:string='getHeroInfo.name';
+  reverse=false;
 
   subs1: Subscription;
   constructor(private herosService: HerosService) { }
@@ -35,7 +47,13 @@ export class HerosComponent implements OnInit, OnDestroy {
     this.subs1 = this.herosService.deletedIndexObservable.subscribe(deletedIndex => {
       this.heros.splice(deletedIndex, 1);
     })
+  }
 
+  setFilterClearButton(event){
+    this.filterClearButton = event;
+  }
+  setSearchClearButton(event){
+    this.searchClearButton = event;
   }
 
   ngOnDestroy() {
@@ -66,11 +84,27 @@ export class HerosComponent implements OnInit, OnDestroy {
   }
 
   viewSearchData(event: string) {
-    this.heros = this.herosService.search(event);
+    if(event){
+      if (this.filteringState) {
+        this.filteringState = false;
+        this.filterClearButton.nativeElement.click();
+      }
+      this.searchingState=true;
+      this.heros = this.herosService.search(event);
+    }
+    else this.heros = this.herosService.getAll;
   }
 
   viewFilterData(event: string) {
-    this.heros = this.herosService.filter(event);
+    if(event){
+      if(this.searchingState){
+        this.searchingState=false;
+        this.searchClearButton.nativeElement.click();
+      }
+      this.filteringState=true;
+      this.heros = this.herosService.filter(event);
+    }
+    else this.heros = this.herosService.getAll;
   }
 
 

@@ -136,21 +136,14 @@ export class HerosService {
    * @returns Filter array of heros
    */
   filter(filterKey: string) {
-    const keys = ['older', 'newer', 'overtime', 'inactive'];
+    const keys = ['overtime', 'inactive'];
 
     switch (filterKey) {
       case keys[0]:
-        return this.heros.slice();
-
-      case keys[1]:
-
-        return this._filter_new();
-
-      case keys[2]:
 
         return this._filter_overtime();
 
-      case keys[3]:
+      case keys[1]:
 
         return this._filter_inactive();
 
@@ -161,9 +154,6 @@ export class HerosService {
 
 
   // Filtering helping functions
-  private _filter_new() {
-    return this.heros.slice().reverse();
-  }
   private _filter_overtime() {
     return this.heros.filter(element => {
       let hasReachedOvertime = element.getHeroInfo.overtimeDaysNumber > 0;
