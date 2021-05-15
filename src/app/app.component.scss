@@ -2,8 +2,12 @@
 
 
 ng-sidebar-container{
-    height: 100vh;
+    height: 100vh;  
+    .sideBarCont{
+        overflow-x: hidden;
+    }
 }
+
 
 ::ng-deep .ng-sidebar{
     background-color: $primary-color;
