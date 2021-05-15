@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { DateFunctionsService } from 'src/app/shared/services/date-functions.service';
 import { Hero } from '../models/hero.model';
 
 @Injectable({
@@ -16,7 +15,7 @@ export class HerosService {
     new Hero({ _id: '11', attendToday: false, name: 'Mohamed', program: 'monthlyPlus', startingDate: new Date('2021-04-10'), endingDate: new Date('2021-05-1'), activeDaysNumber: 18, overtimeDaysNumber: 0 }),
   ]
 
-  private deletedIndex = new Subject<number>();
+  private deleted_ID = new Subject<string>();
 
   constructor(private http: HttpClient) { }
 
@@ -33,8 +32,8 @@ export class HerosService {
   /**
    * Get deleted index observable
    */
-  public get deletedIndexObservable(): Subject<number> {
-    return this.deletedIndex;
+  public get deletedIndexObservable(): Subject<string> {
+    return this.deleted_ID;
   }
 
 
@@ -57,10 +56,11 @@ export class HerosService {
 
   /**
    * Mark Attendance of a hero by id
-   * @param index To mark in the local array
    * @param _id To mark in the db
    */
-  makeAttendance(index: number, _id: string) {
+  makeAttendance(_id: string) {
+    const index = this.heros.findIndex(element => element.getHeroInfo._id === _id);
+    console.log(index)
     this.heros[index].markAttendance(); //Locally
     //this.http.post('',{});            //in the server
   }
@@ -69,23 +69,24 @@ export class HerosService {
    * edit hero info
    * @param input info object
    */
-  editHero(input: { index: number, _id: string, name: string, program: string }) {
+  editHero(input: { _id: string, name: string, program: string }) {
+    const index = this.heros.findIndex(element => element.getHeroInfo._id === input._id);
     //Locally
-    this.heros[input.index].name = input.name;
-    this.heros[input.index].program = input.program;
+    this.heros[index].name = input.name;
+    this.heros[index].program = input.program;
 
-    console.log(this.heros[input.index].getHeroInfo)
+    console.log(this.heros[index].getHeroInfo)
     //In the server
     //this.http.put(url,{})
   }
 
   /**
    * to renew the subscription of a hero
-   * @param index index of hero
    * @param _id id of hero
    * @param startingDate starting date
    */
-  renewSubscription(index: number, _id: string, startingDate: Date) {
+  renewSubscription(_id: string, startingDate: Date) {
+    const index = this.heros.findIndex(element => element.getHeroInfo._id === _id );
     this.heros[index].startingDate = startingDate;
     this.heros[index].clearFlags();
 
@@ -96,12 +97,12 @@ export class HerosService {
 
   /**
    * function to delete from local array and from db
-   * @param index index of the deleted item
    * @param _id id of deleted item
    */
-  deleteHero(index: number, _id: string) {
+  deleteHero(_id: string) {
+    const index = this.heros.findIndex(element => element.getHeroInfo._id === _id );
     this.heros.splice(index, 1); //delete locally
-    this.deletedIndex.next(index);
+    this.deleted_ID.next(_id);
     console.log("deleted")
 
     //delete from server

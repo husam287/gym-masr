@@ -58,17 +58,16 @@ export class ModalComponent implements OnInit, OnDestroy {
 
     if (this.purpose === 'edit') {
       this.heroServices.editHero({
-        index: this.heroIndex,
         _id: this.hero.getHeroInfo._id,
         name: this.editedHero.name,
         program: this.editedHero.program,
       })
     }
     else if(this.purpose === 'renew'){
-      this.heroServices.renewSubscription(this.heroIndex,this.hero.getHeroInfo._id,this.selectedDate);
+      this.heroServices.renewSubscription(this.hero.getHeroInfo._id,this.selectedDate);
     }
     else if(this.purpose === 'delete'){
-      this.heroServices.deleteHero(this.heroIndex,this.hero.getHeroInfo._id);
+      this.heroServices.deleteHero(this.hero.getHeroInfo._id);
     }
     
     modal.close();

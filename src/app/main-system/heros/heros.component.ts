@@ -29,8 +29,8 @@ export class HerosComponent implements OnInit, OnDestroy {
   menuYpos: number;
 
   //clearingButtonsRefs
-  searchClearButton:ElementRef<HTMLElement>
-  filterClearButton:ElementRef<HTMLElement>
+  searchClearButton: ElementRef<HTMLElement>
+  filterClearButton: ElementRef<HTMLElement>
 
   subs1: Subscription;
   constructor(private herosService: HerosService) { }
@@ -40,15 +40,16 @@ export class HerosComponent implements OnInit, OnDestroy {
     this.heros = this.herosService.getAll;
 
     //Observe deleted index to be deleted from this.heros
-    this.subs1 = this.herosService.deletedIndexObservable.subscribe(deletedIndex => {
-      this.heros.splice(deletedIndex, 1);
+    this.subs1 = this.herosService.deletedIndexObservable.subscribe(deletedID => {
+      const index = this.heros.findIndex(element => element.getHeroInfo._id === deletedID );
+      this.heros.splice(index, 1);
     })
   }
 
-  setFilterClearButton(event){
+  setFilterClearButton(event) {
     this.filterClearButton = event;
   }
-  setSearchClearButton(event){
+  setSearchClearButton(event) {
     this.searchClearButton = event;
   }
 
@@ -75,29 +76,29 @@ export class HerosComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  markAttend(index: number, _id: string) {
-    this.herosService.makeAttendance(index, _id);
+  markAttend(_id: string) {
+    this.herosService.makeAttendance(_id);
   }
 
   viewSearchData(event: string) {
-    if(event){
+    if (event) {
       if (this.filteringState) {
         this.filteringState = false;
         this.filterClearButton.nativeElement.click();
       }
-      this.searchingState=true;
+      this.searchingState = true;
       this.heros = this.herosService.search(event);
     }
     else this.heros = this.herosService.getAll;
   }
 
   viewFilterData(event: string) {
-    if(event){
-      if(this.searchingState){
-        this.searchingState=false;
+    if (event) {
+      if (this.searchingState) {
+        this.searchingState = false;
         this.searchClearButton.nativeElement.click();
       }
-      this.filteringState=true;
+      this.filteringState = true;
       this.heros = this.herosService.filter(event);
     }
     else this.heros = this.herosService.getAll;

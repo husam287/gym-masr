@@ -37,7 +37,7 @@
                     </th>
                     <!-- Check Button -->
                     <td class="text-center">
-                        <button (click)="markAttend(i,hero.getHeroInfo._id)" *ngIf="!hero.getHeroInfo.attendToday" class="btn btn-success btn-sm">
+                        <button (click)="markAttend(hero.getHeroInfo._id)" *ngIf="!hero.getHeroInfo.attendToday" class="btn btn-success btn-sm">
                             <i class="fas fa-check"></i>
                         </button>
                         <i *ngIf="hero.getHeroInfo.attendToday" class="fas fa-check-double text-success"></i> 
