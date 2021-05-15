@@ -9,8 +9,12 @@ import { Subscription } from 'rxjs';
 })
 export class SearchFieldComponent implements OnInit,OnDestroy {
   @Output('searchData') searchDate: EventEmitter<string> = new EventEmitter();
+
   @ViewChild('form', { static: true }) form: NgForm;
+
   @ViewChild('searchInputRef') searchInputRef:ElementRef<HTMLInputElement>
+  searchInputData="";
+
   showsearch=false;
 
   subs: Subscription;
@@ -25,6 +29,7 @@ export class SearchFieldComponent implements OnInit,OnDestroy {
   }
 
   showSearchInput(){
+    if(this.showsearch) this.searchInputData=''; 
     this.showsearch=!this.showsearch;
     this.searchInputRef.nativeElement.classList.remove('d-none')
     this.searchInputRef.nativeElement.focus();

@@ -1,9 +1,10 @@
 <div class="btn-group groupPosition mb-2">
     <form #form="ngForm" class="form-inline correctPosition">
-        <input [ngClass]="showsearch? '':'d-none'" #searchInputRef type="text" ngModel name="search"
+        <input [ngClass]="showsearch? '':'d-none'" #searchInputRef type="text" [(ngModel)]="searchInputData" name="search"
             class="form-control rounded-pill" placeholder="Search">
     </form>
-    <button type="button" (click)="showSearchInput()" class="btn rounded-circle btn-outline-secondary buttonPosition">
-        <i class="fas fa-search"></i>
-    </button>
+    <span type="button" (click)="showSearchInput()" [ngClass]="!showsearch? 'btn-outline-secondary':''" class="btn rounded-circle buttonPosition">
+        <i *ngIf="!showsearch" class="fas fa-search"></i>
+        <i *ngIf="showsearch" class="fas fa-times text-secondary"></i>
+    </span>
 </div>
