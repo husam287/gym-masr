@@ -15,7 +15,7 @@ export class SearchFieldComponent implements OnInit,OnDestroy {
   constructor() { }
 
   ngOnInit(): void {
-    this.subs = this.form.form.valueChanges.subscribe(searchDate => this.searchDate.emit(searchDate))
+    this.subs = this.form.form.valueChanges.subscribe(searchDate => this.searchDate.emit(searchDate.search))
   }
 
   ngOnDestroy(){

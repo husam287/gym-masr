@@ -9,14 +9,16 @@ import { Subscription } from 'rxjs';
 })
 export class FilterFieldComponent implements OnInit,OnDestroy {
   @ViewChild('form',{static:true}) form:NgForm;
-  @Output('filterDate') filterData:EventEmitter<string> = new EventEmitter();
+  @Output('filterDate') filterDataEmitter:EventEmitter<string> = new EventEmitter();
+
+  filterInputDate="";
 
   subs:Subscription;
   constructor() { }
 
   ngOnInit(): void {
     this.subs = this.form.form.valueChanges.subscribe(filterDate=>{
-      this.filterData.emit(filterDate);
+      this.filterDataEmitter.emit(filterDate.filter);
     })
   }
 
