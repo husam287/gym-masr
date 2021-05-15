@@ -32,10 +32,6 @@ export class HerosComponent implements OnInit, OnDestroy {
   searchClearButton:ElementRef<HTMLElement>
   filterClearButton:ElementRef<HTMLElement>
 
-  //Sorting key
-  key:string='getHeroInfo.name';
-  reverse=false;
-
   subs1: Subscription;
   constructor(private herosService: HerosService) { }
 

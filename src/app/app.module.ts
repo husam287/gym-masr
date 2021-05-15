@@ -20,7 +20,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HeroEditFormComponent } from './main-system/hero-edit-form/hero-edit-form.component';
 import { FilterFieldComponent } from './main-system/filter-field/filter-field.component';
 import { SearchFieldComponent } from './main-system/search-field/search-field.component';
-import { OrderModule } from 'ngx-order-pipe';
 
 @NgModule({
   declarations: [
@@ -42,7 +41,6 @@ import { OrderModule } from 'ngx-order-pipe';
   imports: [
     BrowserModule,
     FormsModule,
-    OrderModule,
     HttpClientModule,
     NgbModule,
     SidebarModule.forRoot(),
