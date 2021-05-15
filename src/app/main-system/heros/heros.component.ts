@@ -15,16 +15,14 @@ export class HerosComponent implements OnInit, OnDestroy {
 
   heros: Hero[] = [];
 
+  //selected hero's id and index
   currentElementId: string;
   currentIndex: number;
 
-
+  //Menu Positioning
   _showMenu = false;
   menuXpos: number;
   menuYpos: number;
-
-  filterData: string;
-  searchData: string;
 
   subs1: Subscription;
   constructor(private herosService: HerosService) { }
@@ -37,6 +35,7 @@ export class HerosComponent implements OnInit, OnDestroy {
     this.subs1 = this.herosService.deletedIndexObservable.subscribe(deletedIndex => {
       this.heros.splice(deletedIndex, 1);
     })
+
   }
 
   ngOnDestroy() {
@@ -67,13 +66,11 @@ export class HerosComponent implements OnInit, OnDestroy {
   }
 
   viewSearchData(event: string) {
-    this.searchData = event;
-    console.log(event)
+    this.heros = this.herosService.search(event);
   }
 
   viewFilterData(event: string) {
-    this.filterData = event
-    console.log(event)
+    this.heros = this.herosService.filter(event);
   }
 
 

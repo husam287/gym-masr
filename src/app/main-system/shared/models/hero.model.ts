@@ -91,6 +91,12 @@ export class Hero {
         this.hero.attendToday=false;
     }
 
+
+
+  //##########################################
+  //############ Private Function ############
+  //##########################################
+
     /**
      * To calculate the remaining days till resubscript
      * @param endingDate End date

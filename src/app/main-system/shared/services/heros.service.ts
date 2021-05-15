@@ -13,7 +13,7 @@ export class HerosService {
     new Hero({ _id: '1', attendToday: true, name: 'Abdelrahman Sherif', program: 'monthlyPlus', startingDate: new Date('2021-05-1'), endingDate: new Date('2021-06-12'), activeDaysNumber: 7, overtimeDaysNumber: 0 }),
     new Hero({ _id: '2', attendToday: false, name: 'أوتاكا المصري', program: 'daily', startingDate: new Date('2021-05-10'), endingDate: new Date('2021-06-13'), activeDaysNumber: 1, overtimeDaysNumber: 0 }),
     new Hero({ _id: '3', attendToday: false, name: 'Al Kowaa', program: 'monthly', startingDate: new Date('2021-04-10'), endingDate: new Date('2021-05-10'), activeDaysNumber: 18, overtimeDaysNumber: 1 }),
-    new Hero({ _id: '4', attendToday: false, name: 'Mohamed', program: 'monthlyPlus', startingDate: new Date('2021-04-10'), endingDate: new Date('2021-05-1'), activeDaysNumber: 18, overtimeDaysNumber: 0 }),
+    new Hero({ _id: '11', attendToday: false, name: 'Mohamed', program: 'monthlyPlus', startingDate: new Date('2021-04-10'), endingDate: new Date('2021-05-1'), activeDaysNumber: 18, overtimeDaysNumber: 0 }),
   ]
 
   private deletedIndex = new Subject<number>();
@@ -33,10 +33,10 @@ export class HerosService {
   /**
    * Get deleted index observable
    */
-  public get deletedIndexObservable() : Subject<number> {
+  public get deletedIndexObservable(): Subject<number> {
     return this.deletedIndex;
   }
-  
+
 
   /**
    * Function that create a new hero
@@ -45,8 +45,7 @@ export class HerosService {
    * @param startingDate starting date
    */
   async addNewHero(name: string, program: string, startingDate: Date = new Date()) {
-
-    const newHero = new Hero({ name, program, startingDate})
+    const newHero = new Hero({ name, program, startingDate })
     console.log(newHero);
 
     this.heros.push(newHero); //locally
@@ -80,17 +79,28 @@ export class HerosService {
     //this.http.put(url,{})
   }
 
-  renewSubscription(index:number,_id:string,startingDate:Date){
+  /**
+   * to renew the subscription of a hero
+   * @param index index of hero
+   * @param _id id of hero
+   * @param startingDate starting date
+   */
+  renewSubscription(index: number, _id: string, startingDate: Date) {
     this.heros[index].startingDate = startingDate;
     this.heros[index].clearFlags();
-    
+
     console.log(this.heros[index].getHeroInfo.startingDate);
     //into server
     //this.http.post()
   }
 
-  deleteHero(index:number,_id:string){
-    this.heros.splice(index,1); //delete locally
+  /**
+   * function to delete from local array and from db
+   * @param index index of the deleted item
+   * @param _id id of deleted item
+   */
+  deleteHero(index: number, _id: string) {
+    this.heros.splice(index, 1); //delete locally
     this.deletedIndex.next(index);
     console.log("deleted")
 
@@ -101,35 +111,76 @@ export class HerosService {
 
 
 
+  //###########################################
+  //############ Search And Filter ############
+  //###########################################
   /**
-   * To add 1 month to a date
-   * @param date starting date
-   * @returns new date oof the next month
+   * Search by name or id
+   * @param item Item to be searched
+   * @returns Filtered array of names | Array of one _id
    */
-  private addMonth(date: Date): Date {
-    let endDate = new Date(date);
-    endDate.setMonth(date.getMonth() + 1);
-    return endDate;
+  search(item: string) {
+    return this.heros.filter(element => {
+      let isMatch =
+        element.getHeroInfo.name.toLowerCase().match(item.toLowerCase()) ||
+        element.getHeroInfo._id.toLowerCase().match(item.toLowerCase())
+
+      if (isMatch)
+        return true;
+    });
   }
 
   /**
-   * To add 1 day to a date
-   * @param date starting date
-   * @returns new date of the next day
+   * Filter the heros with respect to a key
+   * @param filterKey filter key; how to be filtered
+   * @returns Filter array of heros
    */
-  private addDay(date: Date) {
-    let endDate = new Date(date);
-    endDate.setDate(date.getDate() + 1);
-    return endDate;
+  filter(filterKey: string) {
+    const keys = ['older', 'newer', 'overtime', 'inactive'];
+
+    switch (filterKey) {
+      case keys[0]:
+        return this.heros.slice();
+
+      case keys[1]:
+
+        return this._filter_new();
+
+      case keys[2]:
+
+        return this._filter_overtime();
+
+      case keys[3]:
+
+        return this._filter_inactive();
+
+      default:
+        return this.heros.slice();
+    }
   }
 
-  private initEndingTime(startingDate: Date, program: string): Date {
-    const isMonth = program[0] === 'm' ? true : false;
-    let endingDate: Date;
 
-    if (isMonth)
-      return endingDate = this.addMonth(startingDate);
-    else
-      return endingDate = this.addDay(startingDate);
+  // Filtering helping functions
+  private _filter_new() {
+    return this.heros.slice().reverse();
   }
+  private _filter_overtime() {
+    return this.heros.filter(element => {
+      let hasReachedOvertime = element.getHeroInfo.overtimeDaysNumber > 0;
+      return hasReachedOvertime;
+    })
+  }
+  private _filter_inactive() {
+    return this.heros.filter(element => {
+      let isInactive = element.getHeroInfo.status === 'inactive';
+      return isInactive;
+    })
+  }
+
+
+
+
+
+
+
 }
