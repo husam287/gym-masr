@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
@@ -10,6 +10,8 @@ import { Subscription } from 'rxjs';
 export class SearchFieldComponent implements OnInit,OnDestroy {
   @Output('searchData') searchDate: EventEmitter<string> = new EventEmitter();
   @ViewChild('form', { static: true }) form: NgForm;
+  @ViewChild('searchInputRef') searchInputRef:ElementRef<HTMLInputElement>
+  showsearch=false;
 
   subs: Subscription;
   constructor() { }
@@ -20,6 +22,12 @@ export class SearchFieldComponent implements OnInit,OnDestroy {
 
   ngOnDestroy(){
     this.subs.unsubscribe();
+  }
+
+  showSearchInput(){
+    this.showsearch=!this.showsearch;
+    this.searchInputRef.nativeElement.classList.remove('d-none')
+    this.searchInputRef.nativeElement.focus();
   }
 
   

@@ -1,5 +1,5 @@
 <form #form="ngForm" class="form-group mb-2 justify-content-">
-    <div class="input-group filterInput ">
+    <div class="input-group filterInput" [ngClass]="(filterInputDate==='')? 'filterInputGrey':'filterInputDanger'">
         <div *ngIf="filterInput.value" class="input-group-prepend">
             <button (click)="filterInputDate=''" class="btn btn-sm btn-outline-danger">
                 <i class="fas fa-ban" style="font-size: 1.6rem;"></i>

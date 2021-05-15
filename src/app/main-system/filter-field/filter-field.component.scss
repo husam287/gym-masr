@@ -1,3 +1,5 @@
+@import 'variables';
+
 select{
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -9,6 +11,7 @@ select{
         outline: transparent;
     }
 }
+
 .filterInput::after{
     content: "\f0b0";
     font-family: FontAwesome;
@@ -16,11 +19,14 @@ select{
     right: 15px;
     top: 2px;
     z-index: 5;
-
     text-align: center;
     font-size: 28px;
     line-height: 45px;
-    color: rgba(0, 0, 0, .5);
-    background-color: rgba(255, 255, 255, 0.1);
     pointer-events: none;
+}
+.filterInputGrey::after{
+   color: $secondary;
+}
+.filterInputDanger::after{
+    color: $danger;
 }
