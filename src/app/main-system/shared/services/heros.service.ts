@@ -2,22 +2,38 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Hero } from '../models/hero.model';
+import * as faker from 'faker'
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class HerosService {
   private heros: Hero[] = [
-    new Hero({ _id: '0', attendToday: true, name: 'Hossam Sherif', program: 'monthly', startingDate: new Date('2021-04-17'), endingDate: new Date('2021-07-12'), activeDaysNumber: 14, overtimeDaysNumber: 0 }),
-    new Hero({ _id: '1', attendToday: true, name: 'Abdelrahman Sherif', program: 'monthlyPlus', startingDate: new Date('2021-05-1'), endingDate: new Date('2021-06-12'), activeDaysNumber: 7, overtimeDaysNumber: 0 }),
-    new Hero({ _id: '2', attendToday: false, name: 'أوتاكا المصري', program: 'daily', startingDate: new Date('2021-05-10'), endingDate: new Date('2021-06-13'), activeDaysNumber: 1, overtimeDaysNumber: 0 }),
-    new Hero({ _id: '3', attendToday: false, name: 'Al Kowaa', program: 'monthly', startingDate: new Date('2021-04-10'), endingDate: new Date('2021-05-10'), activeDaysNumber: 18, overtimeDaysNumber: 1 }),
-    new Hero({ _id: '11', attendToday: false, name: 'Mohamed', program: 'monthlyPlus', startingDate: new Date('2021-04-10'), endingDate: new Date('2021-05-1'), activeDaysNumber: 18, overtimeDaysNumber: 0 }),
+    new Hero({ _id: '0', attendToday: false, name: 'حسام شريف', program: 'daily', startingDate: new Date('2021-05-10'), endingDate: new Date('2021-06-13'), activeDaysNumber: 1, overtimeDaysNumber: 0 }),
   ]
 
   private deleted_ID = new Subject<string>();
 
   constructor(private http: HttpClient) { }
+
+  getFakes(){
+    faker.locale = "ar";  
+    for (let index = 0; index < 100; index++) {
+      const name = faker.name.firstName()+' '+faker.name.firstName();
+      let pp = ['daily','monthly','monthlyPlus'];
+      const rand = Math.floor((Math.random()*3));
+      const program = pp[rand];
+  
+      const _id = Math.floor((Math.random()*10000)).toString();
+  
+      const startingDate:Date = index%3===0? new Date(faker.date.past()):new Date(faker.date.recent());
+      const activeDaysNumber = Math.floor((Math.random()*30));
+      const overtimeDaysNumber = (index%5)===0? Math.floor((Math.random()*5)):0;
+
+      this.heros.push(new Hero({name,_id,program,startingDate,activeDaysNumber,overtimeDaysNumber}))
+    }
+  }
 
   /**
    * Get copy of heros
@@ -44,7 +60,8 @@ export class HerosService {
    * @param startingDate starting date
    */
   async addNewHero(name: string, program: string, startingDate: Date = new Date()) {
-    const newHero = new Hero({ name, program, startingDate })
+    const _id = Math.floor((Math.random()*1000)+12).toString();
+    const newHero = new Hero({ name, program, startingDate,_id })
     console.log(newHero);
 
     this.heros.push(newHero); //locally
@@ -157,7 +174,7 @@ export class HerosService {
   // Filtering helping functions
   private _filter_overtime() {
     return this.heros.filter(element => {
-      let hasReachedOvertime = element.getHeroInfo.overtimeDaysNumber > 0;
+      let hasReachedOvertime = element.getHeroInfo.status === 'danger';
       return hasReachedOvertime;
     })
   }

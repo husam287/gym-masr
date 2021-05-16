@@ -11,7 +11,7 @@
                     <form #form="ngForm" (ngSubmit)="onSubmit(form)">
                         <!-- Name Input -->
                         <div class="form-group border" [ngClass]=" (!name.valid&&name.touched)? 'border-danger':'' ">
-                            <input required class="form-control" type="text" ngModel #name="ngModel" name="name" placeholder="Name">
+                            <input required autocomplete="off" class="form-control" type="text" ngModel #name="ngModel" name="name" placeholder="Name">
                         </div>
                         
                         <!-- Program Select -->
@@ -24,6 +24,7 @@
                             </select>
                         </div>
 
+                        <div *ngIf="isSubmitted && !form.touched && !form.dirty" class="alert alert-success">Added {{previousName}} Successfully!</div>
                         <!-- Submit Button -->
                         <div class="row px-3 justify-content-end">
                             <button class="btn btn-success" [disabled]="!form.valid" type="submit">

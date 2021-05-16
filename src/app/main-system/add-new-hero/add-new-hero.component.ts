@@ -9,6 +9,9 @@ import { HerosService } from '../shared/services/heros.service';
 })
 export class AddNewHeroComponent implements OnInit {
 
+  isSubmitted=false;
+  previousName = '';
+
   constructor(private herosService:HerosService) { }
 
   ngOnInit(): void {
@@ -17,8 +20,11 @@ export class AddNewHeroComponent implements OnInit {
   //{name,program}
   onSubmit(form:NgForm){
     const {name,program} = form.form.value;
+    console.log(form)
     this.herosService.addNewHero(name,program,new Date(Date.now()));
-    form.resetForm({name:'',program:''});  
+    this.isSubmitted=true;
+    this.previousName=name;  
+    form.resetForm({name:'',program:''});
   }
 
 }
